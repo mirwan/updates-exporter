@@ -1,5 +1,12 @@
 # In Seconds
 Interval: 3600
 Port: 9101
+# Overrides Port when set, e.g. "127.0.0.1:9101"
+#Listen-Address: ""
+#Telemetry-Path: "/metrics"
+# exporter-toolkit web configuration file enabling TLS or authentication
+#Web-Config-File: ""
 # Log Level Options: debug, info, warn, error
 Log-Level: "info"
+# Run apt-get and zypper through "sudo -n"
+#Sudo: false

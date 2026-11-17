@@ -1,6 +1,7 @@
 package distros
 
 import (
+	"bytes"
 	"fmt"
 	"log/slog"
 	"os"
@@ -18,6 +19,29 @@ var rhelReleases = []string{
 }
 
 var osReleaseFile = "/etc/os-release"
+
+// UseSudo makes RunCommand run the package manager through "sudo -n", for an
+// exporter running as an unprivileged user.
+var UseSudo bool
+
+func sudoWrap(name string, args []string) (string, []string) {
+	if !UseSudo {
+		return name, args
+	}
+	return "sudo", append([]string{"-n", name}, args...)
+}
+
+// RunCommand runs a command with extra environment variables and returns its
+// standard output and standard error. It is a variable so tests can replace it.
+var RunCommand = func(env []string, name string, args ...string) (stdout, stderr []byte, err error) {
+	name, args = sudoWrap(name, args)
+	cmd := exec.Command(name, args...)
+	cmd.Env = append(os.Environ(), env...)
+	var outBuf, errBuf bytes.Buffer
+	cmd.Stdout, cmd.Stderr = &outBuf, &errBuf
+	err = cmd.Run()
+	return outBuf.Bytes(), errBuf.Bytes(), err
+}
 
 func ParseUpdateCount(out string) int {
 	count, _ := strconv.Atoi(strings.TrimSpace(out))
@@ -44,6 +68,10 @@ func GetLinuxDistro() string {
 	switch {
 	case strings.Contains(s, "ubuntu"):
 		return "ubuntu"
+	case strings.Contains(s, "debian"):
+		return "debian"
+	case strings.Contains(s, "suse"), strings.Contains(s, "sles"):
+		return "suse"
 	case strings.Contains(s, "rhel"), strings.Contains(s, "centos"), strings.Contains(s, "fedora"):
 		return "rhel"
 	default:

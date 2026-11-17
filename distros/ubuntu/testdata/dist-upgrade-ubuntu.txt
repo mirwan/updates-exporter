@@ -1,0 +1,17 @@
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Calculating upgrade...
+The following packages will be upgraded:
+  libsecurity-tools libssl3 openssl tzdata vim
+5 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Inst libssl3 [3.0.2-0ubuntu1.15] (3.0.2-0ubuntu1.18 Ubuntu:22.04/jammy-updates, Ubuntu:22.04/jammy-security [amd64])
+Inst openssl [3.0.2-0ubuntu1.15] (3.0.2-0ubuntu1.18 Ubuntu:22.04/jammy-security [amd64])
+Inst tzdata [2024a-0ubuntu0.22.04] (2024b-0ubuntu0.22.04 Ubuntu:22.04/jammy-updates [all])
+Inst vim [2:8.2.3995-1ubuntu2.15] (2:8.2.3995-1ubuntu2.16+esm1 UbuntuESMApps:22.04/jammy-apps-security [amd64])
+Inst libsecurity-tools [1.0-1] (1.0-2 Ubuntu:22.04/jammy-updates [amd64])
+Conf libssl3 (3.0.2-0ubuntu1.18 Ubuntu:22.04/jammy-updates, Ubuntu:22.04/jammy-security [amd64])
+Conf openssl (3.0.2-0ubuntu1.18 Ubuntu:22.04/jammy-security [amd64])
+Conf tzdata (2024b-0ubuntu0.22.04 Ubuntu:22.04/jammy-updates [all])
+Conf vim (2:8.2.3995-1ubuntu2.16+esm1 UbuntuESMApps:22.04/jammy-apps-security [amd64])
+Conf libsecurity-tools (1.0-2 Ubuntu:22.04/jammy-updates [amd64])

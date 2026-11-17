@@ -2,6 +2,7 @@ package distros
 
 import (
 	"os"
+	"slices"
 	"testing"
 )
 
@@ -46,5 +47,19 @@ func TestGetDistros(t *testing.T) {
 	got = GetLinuxDistro()
 	if got != expected {
 		t.Errorf("Expected %s, got %s", expected, got)
+	}
+}
+
+func TestSudoWrap(t *testing.T) {
+	name, args := sudoWrap("zypper", []string{"--xmlout", "list-patches"})
+	if name != "zypper" || !slices.Equal(args, []string{"--xmlout", "list-patches"}) {
+		t.Errorf("unexpected command without sudo: %s %v", name, args)
+	}
+
+	UseSudo = true
+	defer func() { UseSudo = false }()
+	name, args = sudoWrap("zypper", []string{"--xmlout", "list-patches"})
+	if name != "sudo" || !slices.Equal(args, []string{"-n", "zypper", "--xmlout", "list-patches"}) {
+		t.Errorf("unexpected command with sudo: %s %v", name, args)
 	}
 }
